@@ -21,10 +21,9 @@ services:
       db:
         condition: service_healthy
     environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: bookshop
-      DB_USER: bookshop
-      DB_PASSWORD: bookshop
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bookshop
+      SPRING_DATASOURCE_USERNAME: bookshop
+      SPRING_DATASOURCE_PASSWORD: bookshop
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
       - "8080:8080"

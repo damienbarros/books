@@ -1,13 +1,22 @@
-# Build stage
+# ---- build stage ----
 FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
 
-# Run stage
-FROM eclipse-temurin:21-jdk
+COPY pom.xml .
+RUN mvn -B -DskipTests dependency:go-offline
+
+COPY src ./src
+RUN mvn -B -DskipTests package spring-boot:repackage
+
+# Debug: list produced artifacts (optional, remove after troubleshooting)
+# RUN ls -la /app/target
+
+# ---- runtime stage ----
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/target/bookshop-0.0.1.jar app.jar
+
+# copy any jar from build target (pick the first jar and name it app.jar)
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar /app/app.jar"]

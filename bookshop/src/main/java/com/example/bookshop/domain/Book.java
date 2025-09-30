@@ -71,4 +71,9 @@ public class Book {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
 }

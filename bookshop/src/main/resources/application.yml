@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:bookshop}
-    username: ${DB_USER:bookshop}
-    password: ${DB_PASSWORD:bookshop}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/bookshop}
+    username: ${SPRING_DATASOURCE_USERNAME:bookshop}
+    password: ${SPRING_DATASOURCE_PASSWORD:bookshop}
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate.jdbc.time_zone: UTC
 server:
-  port: 8080
+  port: 8081

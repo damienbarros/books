@@ -45,6 +45,17 @@ public class Client {
     @Email
     private String email;
 
+    @NotBlank
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     // optional bidirecional
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
